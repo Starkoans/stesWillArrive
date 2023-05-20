@@ -18,10 +18,15 @@ function App() {
     let until_seconds = Math.round(Math.abs(arrive_date-now_date)/(1000))%60;//секунд
     let until_minutes = Math.round(Math.abs(arrive_date-now_date)/(1000*60))%60;//минут
     let until_hours = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60))%24;//часов
-    let until_days = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60*24))%30;//дней
-    let until_months = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60*24*30));//месяцев
+    let until_days = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60*24));//дней
 
-    if( arrive_date<now_date){
+    let until_months;//месяцев
+    if(until_days > 30)
+        {   until_days = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60*24))%30;
+            until_months = Math.round(Math.abs(arrive_date-now_date)/(1000*60*60*24*30)); }
+    else { until_months = 0;}
+
+    if( arrive_date < now_date){
         until_seconds = 0
         until_minutes =0
         until_hours = 0
@@ -60,7 +65,7 @@ function App() {
 
           <h3> {until_days}</h3>
               {until_days%10 == 1 ? " День" :
-                  ((until_days%5 >= 5) || until_days%10 === 0) ? " Дней" : " Дня"}
+                  ((until_days% 10 >= 5) || until_days%10 === 0) ? " Дней" : " Дня"}
 
           <h3> {until_hours}</h3>
               {until_hours%10===1? " Час" :
